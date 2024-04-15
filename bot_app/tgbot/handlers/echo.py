@@ -26,3 +26,4 @@ async def bot_echo_all(message: types.Message, state: FSMContext):
     ]
     await message.answer('\n'.join(text))
 
+# # # Optional echo test handler

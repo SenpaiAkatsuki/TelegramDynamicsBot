@@ -74,10 +74,7 @@ async def main():
 
     for router in [
         commands_router,
-        # router_test,
         admin_router,
-        # user_router,
-        # echo_router,
     ]:
         dp.include_router(router)
 
@@ -96,5 +93,3 @@ if __name__ == '__main__':
         asyncio.run(main())
     except (KeyboardInterrupt, SystemExit):
         logger.error("Бот був вимкнений!")
-
-# TEST
