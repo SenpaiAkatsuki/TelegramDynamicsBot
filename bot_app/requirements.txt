@@ -6,3 +6,4 @@ alembic~=1.9
 asyncpg
 aiogram-dialog~=2.0.0b17
 betterlogging
+apscheduler
