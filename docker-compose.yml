@@ -1,0 +1,77 @@
+version: '3.3'
+
+services:
+  bot:
+    image: "${BOT_IMAGE_NAME:-tg_bot-image}"
+    container_name: "${BOT_CONTAINER_NAME:-tg_bot-container}"
+    stop_signal: SIGINT
+    build:
+      context: ./bot_app
+    working_dir: "/usr/src/app/${BOT_NAME:-tg_bot}"
+    volumes:
+      - ./bot_app:/usr/src/app/${BOT_NAME:-tg_bot}
+      - ./infrastructure:/usr/src/app/${BOT_NAME:-tg_bot}/infrastructure
+      - ./migrations:/usr/src/app/${BOT_NAME:-tg_bot}/migrations
+    command: python3 -m bot
+    restart: always
+
+    env_file:
+      - ".env"
+    networks:
+      - tg_bot
+
+  tg_userbot:
+    build: ./telecharm-userbot
+    stop_signal: SIGINT
+    container_name: tg_userbot
+    env_file:
+      - ".env"
+    volumes:
+      - ./telecharm-userbot:/src
+      - ./infrastructure:/src/infrastructure
+    command: python -m scheduler
+    restart: always
+    networks:
+      - tg_bot
+
+  pg_database:
+    container_name: dynamics_db
+    image: postgres:13-alpine
+    stop_signal: SIGINT
+    ports:
+      - "5432:5432"
+    restart: always
+    volumes:
+      - "./pgdata:/var/lib/postgresql/data"
+    command: "postgres -c max_connections=150
+              -c shared_buffers=512MB -c effective_cache_size=1536MB
+              -c maintenance_work_mem=128MB -c checkpoint_completion_target=0.9 -c wal_buffers=16MB
+              -c default_statistics_target=100 -c random_page_cost=1.1 -c effective_io_concurrency=200
+              -c work_mem=3495kB -c min_wal_size=1GB -c max_wal_size=4GB -c max_worker_processes=2
+              -c max_parallel_workers_per_gather=1 -c max_parallel_workers=2 -c max_parallel_maintenance_workers=1"
+    env_file:
+      - '.env'
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "200k"
+        max-file: "10"
+    networks:
+      - tg_bot
+
+  redis_cache:
+    image: redis:6.2-alpine
+    restart: always
+    stop_signal: SIGINT
+    command: redis-server --port $REDIS_PORT --save 20 1 --loglevel warning --requirepass $REDIS_PASSWORD
+    env_file:
+      - ".env"
+    volumes:
+      - ./cache:/data
+    networks:
+      - tg_bot
+
+
+networks:
+  tg_bot:
+    driver: bridge
