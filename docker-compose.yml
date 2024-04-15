@@ -59,6 +59,14 @@ services:
     networks:
       - tg_bot
 
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+    environment:
+      ADMINER_DESIGN: hydra
+
   redis_cache:
     image: redis:6.2-alpine
     restart: always
