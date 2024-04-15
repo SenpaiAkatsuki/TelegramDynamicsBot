@@ -1,3 +1,14 @@
+Telegram bot I created back in 2023, right when Aiogram 3.0 was relesed. This bot is about run ads across multiple Telegram groups.
+## Built With
+
+- **Python**
+- **Aiogram**
+- **Redis**
+- **Alembic**
+- **Docker**
+- **SQLalchemy**
+
+
 # FIRST SETUP.
 
 1. `docker-compose up`
