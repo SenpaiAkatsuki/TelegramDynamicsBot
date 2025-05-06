@@ -1,6 +1,6 @@
 # TelegramDynamicsBot
 
-TelegramDynamicsBot is a modern solution for automating Telegram group announcements by combining two key components into one integrated system.
+**TelegramDynamicsBot** is an ad-campaign automation tool for Telegram, featuring a dual-bot architecture. A control bot built with Aiogram collects campaign parameters from the user, and a UserBot executes message broadcasts on behalf of the user.
 
 ---
 
