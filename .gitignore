@@ -1,0 +1,43 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+build/#
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+...
+
+# Environments
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Pyre type checker
+.pyre/
+.idea/*
+.env
+pgdata/*
+cache/*
+
+# ─── Project-specific ignores ─────────────────────────────────────────────────
+
+# keep the logs folder structure, but never commit its contents
+logs/
+
+# ignore any local Docker-Compose overrides
+docker-compose.override.yml
+
+# protect any “secret” YAML configs
+config/*.secret.yaml
