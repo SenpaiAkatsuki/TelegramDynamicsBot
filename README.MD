@@ -56,3 +56,12 @@ TelegramDynamicsBot is a modern solution for automating Telegram group announcem
 - **Database & Caching:**
   - **PostgreSQL:** Primary data storage.
   - **Redis:** Optional, for caching and state management.
+
+# First Setup.
+
+1. `docker-compose up`
+   It will create the containers.
+2. `CTRL + Z`
+   It will detach from the containers.
+3. `sh run_migrations.sh`
+   It will run the migrations for the DB.
